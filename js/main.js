@@ -77,6 +77,47 @@ document.addEventListener('DOMContentLoaded', () => {
 // ===================================
 const contactForm = document.querySelector('.contact-form');
 
+// Create toast notification element
+function createToast(type, title, message) {
+    // Remove existing toast if any
+    const existingToast = document.querySelector('.toast-notification');
+    if (existingToast) existingToast.remove();
+
+    const toast = document.createElement('div');
+    toast.className = `toast-notification toast-${type}`;
+
+    const icon = type === 'success'
+        ? '<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path><polyline points="22 4 12 14.01 9 11.01"></polyline></svg>'
+        : '<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><line x1="15" y1="9" x2="9" y2="15"></line><line x1="9" y1="9" x2="15" y2="15"></line></svg>';
+
+    toast.innerHTML = `
+        <div class="toast-icon">${icon}</div>
+        <div class="toast-content">
+            <h4 class="toast-title">${title}</h4>
+            <p class="toast-message">${message}</p>
+        </div>
+        <button class="toast-close" onclick="this.parentElement.remove()">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <line x1="18" y1="6" x2="6" y2="18"></line>
+                <line x1="6" y1="6" x2="18" y2="18"></line>
+            </svg>
+        </button>
+    `;
+
+    document.body.appendChild(toast);
+
+    // Trigger animation
+    requestAnimationFrame(() => {
+        toast.classList.add('toast-show');
+    });
+
+    // Auto remove after 6 seconds
+    setTimeout(() => {
+        toast.classList.remove('toast-show');
+        setTimeout(() => toast.remove(), 400);
+    }, 6000);
+}
+
 if (contactForm) {
     contactForm.addEventListener('submit', function (e) {
         e.preventDefault();
@@ -88,20 +129,58 @@ if (contactForm) {
 
         // Basic validation
         if (!name || !email || !message) {
-            alert('Please fill in all fields');
+            createToast('error', 'Missing Fields', 'Please fill in all fields before submitting.');
             return;
         }
 
         // Email validation
         const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
         if (!emailRegex.test(email)) {
-            alert('Please enter a valid email address');
+            createToast('error', 'Invalid Email', 'Please enter a valid email address.');
             return;
         }
 
-        // Success message (in production, this would send to a backend)
-        alert(`Thank you, ${name}! Your message has been received. I'll get back to you soon.`);
-        this.reset();
+        // Disable button and show loading state
+        const submitBtn = this.querySelector('.submit-btn');
+        const originalBtnText = submitBtn.innerHTML;
+        submitBtn.disabled = true;
+        submitBtn.innerHTML = `
+            <span class="btn-spinner"></span>
+            Sending...
+        `;
+
+        // Actually send the form data to FormSubmit
+        fetch('https://formsubmit.co/ajax/mohamedalbihery93@gmail.com', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'Accept': 'application/json'
+            },
+            body: JSON.stringify({
+                name: name,
+                email: email,
+                message: message,
+                _subject: 'New Portfolio Contact!',
+                _template: 'table'
+            })
+        })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    createToast('success', 'Message Sent! ✨', `Thank you, ${name}! Your message has been delivered successfully. I'll get back to you soon.`);
+                    contactForm.reset();
+                } else {
+                    createToast('error', 'Send Failed', 'Something went wrong. Please try again or contact me directly via email.');
+                }
+            })
+            .catch(error => {
+                console.error('Form submission error:', error);
+                createToast('error', 'Connection Error', 'Could not send your message. Please check your internet connection and try again.');
+            })
+            .finally(() => {
+                submitBtn.disabled = false;
+                submitBtn.innerHTML = originalBtnText;
+            });
     });
 }
 
