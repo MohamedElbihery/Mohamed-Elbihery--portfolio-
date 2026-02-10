@@ -160,7 +160,7 @@ if (contactForm) {
                 name: name,
                 email: email,
                 message: message,
-                _subject: 'New Portfolio Contact!',
+                _subject: `🔔 New Client Inquiry from ${name} — Portfolio`,
                 _template: 'table'
             })
         })
