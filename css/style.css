@@ -431,6 +431,10 @@ body {
     animation-delay: 1.05s;
 }
 
+.tech-card:nth-child(9) {
+    animation-delay: 1.20s;
+}
+
 /* Glowing border effect */
 .tech-card::before {
     content: '';
