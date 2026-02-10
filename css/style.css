@@ -1216,6 +1216,13 @@ body {
     font-size: 0.85rem;
 }
 
+.footer-socials {
+    display: flex;
+    justify-content: center;
+    gap: var(--spacing-sm);
+    margin-bottom: var(--spacing-md);
+}
+
 /* ===================================
    Animations
    =================================== */
