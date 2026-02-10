@@ -955,77 +955,144 @@ body {
 }
 
 /* ===================================
-   Projects Section
+   Featured Projects Section
    =================================== */
 .projects-section {
     padding: var(--spacing-xl) 0;
-    background: linear-gradient(180deg, var(--bg-primary) 0%, var(--bg-secondary) 100%);
+    position: relative;
+    overflow: hidden;
 }
 
 .projects-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
-    gap: var(--spacing-md);
+    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+    gap: var(--spacing-lg);
+    margin-top: var(--spacing-lg);
 }
 
 .project-card {
-    background-color: var(--bg-card);
-    border: 1px solid var(--border-color);
+    background: var(--bg-card);
     border-radius: var(--radius-lg);
-    padding: var(--spacing-md);
+    border: 1px solid var(--border-color);
+    overflow: hidden;
     transition: all var(--transition-normal);
-    cursor: pointer;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    height: 100%;
 }
 
 .project-card:hover {
-    transform: translateY(-8px);
+    transform: translateY(-10px);
+    box-shadow: var(--shadow-xl);
     border-color: var(--accent-green);
-    box-shadow: var(--shadow-glow);
+    background: var(--bg-card-hover);
 }
 
-.project-icon {
-    width: 48px;
-    height: 48px;
-    background: linear-gradient(135deg, var(--accent-green), var(--accent-emerald));
-    border-radius: var(--radius-sm);
+/* Image styling */
+.project-image-wrapper {
+    position: relative;
+    width: 100%;
+    height: 220px;
+    overflow: hidden;
+    border-bottom: 1px solid var(--border-color);
+}
+
+.project-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.project-card:hover .project-image {
+    transform: scale(1.1) rotate(2deg);
+}
+
+/* Hover Overlay */
+.project-overlay {
+    position: absolute;
+    inset: 0;
+    background: rgba(10, 10, 10, 0.7);
     display: flex;
     align-items: center;
     justify-content: center;
-    margin-bottom: var(--spacing-md);
-    color: var(--text-primary);
+    gap: var(--spacing-md);
+    opacity: 0;
+    backdrop-filter: blur(3px);
+    transition: all 0.4s ease;
+}
+
+.project-card:hover .project-overlay {
+    opacity: 1;
+}
+
+.project-links {
+    transform: translateY(20px);
+    transition: transform 0.4s ease;
+}
+
+.project-card:hover .project-links {
+    transform: translateY(0);
+}
+
+.project-link {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 50px;
+    height: 50px;
+    background: var(--accent-green);
+    color: var(--bg-primary);
+    border-radius: 50%;
+    transition: all 0.3s ease;
+    box-shadow: 0 0 15px rgba(45, 212, 191, 0.4);
+}
+
+.project-link:hover {
+    background: #ffffff;
+    transform: scale(1.1);
+}
+
+/* Content styling */
+.project-content {
+    padding: var(--spacing-md);
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
 }
 
 .project-title {
-    font-size: 1.3rem;
-    font-weight: 600;
+    font-size: 1.25rem;
+    font-weight: 700;
+    margin-bottom: var(--spacing-xs);
     color: var(--text-primary);
-    margin-bottom: var(--spacing-sm);
+    transition: color var(--transition-normal);
+}
+
+.project-card:hover .project-title {
+    color: var(--accent-green);
 }
 
 .project-description {
     font-size: 0.95rem;
-    color: var(--text-secondary);
-    line-height: 1.7;
+    color: var(--text-tertiary);
+    line-height: 1.6;
     margin-bottom: var(--spacing-md);
+    flex-grow: 1;
 }
 
 .project-tags {
     display: flex;
     flex-wrap: wrap;
-    gap: var(--spacing-xs);
+    gap: 8px;
+    margin-top: auto;
 }
 
 .tag {
     font-size: 0.75rem;
-    padding: 0.4rem 0.8rem;
-    background-color: rgba(0, 168, 255, 0.1);
-    color: var(--accent-green);
-    border: 1px solid rgba(0, 168, 255, 0.2);
+    padding: 4px 12px;
     border-radius: 20px;
-    transition: all var(--transition-fast);
-}
-
-.tag:hover {
     background-color: rgba(0, 168, 255, 0.2);
     border-color: var(--accent-green);
 }
