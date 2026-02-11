@@ -433,4 +433,36 @@ document.addEventListener('DOMContentLoaded', () => {
     initTypewriter();
 });
 
+// ===================================
+// Interactive Mouse Glow (Optimized)
+// ===================================
+const mouseGlow = document.querySelector('.mouse-glow');
+if (mouseGlow) {
+    let mouseX = 0;
+    let mouseY = 0;
+    let currentX = 0;
+    let currentY = 0;
+
+    document.addEventListener('mousemove', (e) => {
+        mouseX = e.clientX;
+        mouseY = e.clientY;
+    });
+
+    function animateGlow() {
+        const distX = mouseX - currentX;
+        const distY = mouseY - currentY;
+
+        // Smooth follow logic (0.1 = lag factor)
+        currentX += distX * 0.15;
+        currentY += distY * 0.15;
+
+        mouseGlow.style.transform = `translate(${currentX - 300}px, ${currentY - 300}px)`; // -300 to center 600px div
+
+        requestAnimationFrame(animateGlow);
+    }
+
+    animateGlow();
+}
+
+
 console.log('Portfolio loaded successfully! 🚀');

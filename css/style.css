@@ -332,6 +332,25 @@ body::after {
     }
 }
 
+/* ===================================
+   Interactive Mouse Glow
+   =================================== */
+.mouse-glow {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 600px;
+    height: 600px;
+    background: radial-gradient(circle, rgba(45, 212, 191, 0.15) 0%, transparent 70%);
+    transform: translate(-50%, -50%);
+    pointer-events: none;
+    z-index: -1;
+    border-radius: 50%;
+    /* Hardware Acceleration */
+    will-change: transform;
+    transition: transform 0.1s ease-out;
+    /* Slight lag for smoothness */
+}
 
 /* ===================================
    Responsive Background System
