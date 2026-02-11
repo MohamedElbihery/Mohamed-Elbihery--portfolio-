@@ -70,6 +70,9 @@ document.addEventListener('DOMContentLoaded', () => {
         el.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
         observer.observe(el);
     });
+
+    // Initialize Typewriter Effect
+    initTypewriter();
 });
 
 // ===================================
@@ -438,10 +441,6 @@ function initTypewriter() {
     setTimeout(typePrefix, 800);
 }
 
-document.addEventListener('DOMContentLoaded', () => {
-    // Other initializations...
-    initTypewriter();
-});
 
 console.log('Portfolio loaded successfully! 🚀');
 
