@@ -219,6 +219,109 @@ body::after {
 }
 
 /* ===================================
+   Responsive Background System
+   =================================== */
+
+/* Tablet & Laptop (Up to 1024px) */
+@media (max-width: 1024px) {
+    body::before {
+        width: 140%;
+        height: 140%;
+        top: -20%;
+        left: -20%;
+    }
+
+    .bg-orb {
+        filter: blur(30px);
+    }
+
+    .bg-orb:nth-child(1) {
+        width: 350px;
+        height: 350px;
+    }
+
+    .bg-orb:nth-child(2) {
+        width: 300px;
+        height: 300px;
+    }
+
+    .bg-orb:nth-child(3) {
+        width: 280px;
+        height: 280px;
+    }
+
+    .bg-orb:nth-child(4) {
+        width: 250px;
+        height: 250px;
+    }
+
+    .bg-orb:nth-child(5) {
+        width: 260px;
+        height: 260px;
+    }
+}
+
+/* Mobile Devices (Up to 768px) */
+@media (max-width: 768px) {
+    body::before {
+        width: 120%;
+        height: 120%;
+        top: -10%;
+        left: -10%;
+        animation-duration: 80s;
+    }
+
+    body::after {
+        background-size: 100px 100px;
+        opacity: 0.2;
+    }
+
+    .bg-orb {
+        filter: blur(25px);
+        opacity: 0.15;
+    }
+
+    .bg-orb:nth-child(1) {
+        width: 200px;
+        height: 200px;
+        top: 10%;
+    }
+
+    .bg-orb:nth-child(2) {
+        width: 180px;
+        height: 180px;
+        bottom: 15%;
+    }
+
+    .bg-orb:nth-child(3) {
+        display: none;
+    }
+
+    /* Hide for performance on mobile */
+    .bg-orb:nth-child(4) {
+        width: 150px;
+        height: 150px;
+        top: 40%;
+    }
+
+    .bg-orb:nth-child(5) {
+        display: none;
+    }
+
+    @keyframes floatOrb {
+
+        0%,
+        100% {
+            transform: translate3d(0, 0, 0);
+        }
+
+        50% {
+            transform: translate3d(40px, -60px, 0);
+        }
+    }
+}
+
+/* ===================================
    Navigation Sidebar
    =================================== */
 .sidebar {
