@@ -56,6 +56,7 @@
 
 html {
     scroll-behavior: smooth;
+    overflow-x: hidden;
 }
 
 body {
@@ -800,13 +801,23 @@ body::after {
 }
 
 
+.main-content {
+    margin-left: 70px;
+    padding: 0;
+    transition: margin-left var(--transition-normal);
+    position: relative;
+    overflow-x: hidden;
+    /* Prevent horizontal layout shifts */
+}
+
 .hero-title {
     font-size: 3.5rem;
     font-weight: 700;
     line-height: 1.2;
     margin-bottom: var(--spacing-md);
     min-height: 4.2rem;
-    /* Reserve space to prevent layout shift */
+    overflow: hidden;
+    /* Prevent unexpected expansion */
 }
 
 /* Typewriter Cursor */
@@ -2025,9 +2036,15 @@ body::after {
     }
 
     .hero-title {
-        font-size: 2.2rem;
-        line-height: 1.2;
+        font-size: 2.22rem;
+        line-height: 1.25;
         margin-bottom: var(--spacing-sm);
+        min-height: 6rem;
+        /* Critical: Reserve height for 2 lines to stop layout shift */
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        text-align: center;
     }
 
     .hero-description {
