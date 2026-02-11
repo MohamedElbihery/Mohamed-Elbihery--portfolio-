@@ -555,9 +555,12 @@ body::after {
 /* Typewriter Cursor */
 .type-cursor {
     color: var(--accent-green);
-    font-weight: 300;
-    margin-left: 5px;
-    animation: blink 1s step-end infinite;
+    font-weight: 900;
+    margin-left: 2px;
+    animation: blink 0.8s step-end infinite;
+    text-shadow: 0 0 8px var(--accent-green);
+    display: inline-block;
+    vertical-align: middle;
 }
 
 @keyframes blink {
