@@ -58,23 +58,6 @@ const observer = new IntersectionObserver((entries) => {
     });
 }, observerOptions);
 
-// Observe all cards and sections
-document.addEventListener('DOMContentLoaded', () => {
-    const animatedElements = document.querySelectorAll(
-        '.tech-card, .credential-card, .project-card, .credential-category'
-    );
-
-    animatedElements.forEach(el => {
-        el.style.opacity = '0';
-        el.style.transform = 'translateY(20px)';
-        el.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
-        observer.observe(el);
-    });
-
-    // Initialize Typewriter Effect
-    initTypewriter();
-});
-
 // ===================================
 // Form Handling
 // ===================================
@@ -330,53 +313,74 @@ const skillObserver = new IntersectionObserver((entries) => {
     rootMargin: '0px 0px -50px 0px'
 });
 
-document.addEventListener('DOMContentLoaded', () => {
-    techCards.forEach(card => {
-        card.style.opacity = '0';
-        card.style.transform = 'translateY(30px) scale(0.9)';
-        card.style.transition = 'opacity 0.6s ease, transform 0.6s cubic-bezier(0.34, 1.56, 0.64, 1)';
-        skillObserver.observe(card);
-    });
-});
-
 // ===================================
-// Auto-Scroll for Skills Carousel
+// High-Performance Canvas Particles
 // ===================================
-const techGrid = document.querySelector('.tech-grid');
+function initCanvasParticles() {
+    const canvas = document.getElementById('bg-canvas');
+    if (!canvas) return;
 
-if (techGrid) {
-    let scrollPosition = 0;
-    let scrollDirection = 1; // 1 for right, -1 for left
-    let isHovering = false;
-    let autoScrollInterval;
+    const ctx = canvas.getContext('2d');
+    let width, height;
+    let particles = [];
+    const particleCount = 40;
 
-    // Pause on hover
-    techGrid.addEventListener('mouseenter', () => {
-        isHovering = true;
-    });
+    function resize() {
+        width = window.innerWidth;
+        height = window.innerHeight;
+        canvas.width = width;
+        canvas.height = height;
+    }
 
-    techGrid.addEventListener('mouseleave', () => {
-        isHovering = false;
-    });
+    class Particle {
+        constructor() {
+            this.reset();
+            this.y = Math.random() * height;
+        }
 
-    // Auto-scroll function
-    function autoScroll() {
-        if (!isHovering) {
-            scrollPosition += scrollDirection * 1; // Speed: 1px per frame
+        reset() {
+            this.x = Math.random() * width;
+            this.y = height + 10;
+            this.size = Math.random() * 2 + 1;
+            this.speed = Math.random() * 0.5 + 0.2;
+            this.opacity = Math.random() * 0.5 + 0.1;
+            this.life = Math.random() * 100 + 100;
+        }
 
-            // Check boundaries and reverse direction
-            if (scrollPosition >= techGrid.scrollWidth - techGrid.clientWidth) {
-                scrollDirection = -1;
-            } else if (scrollPosition <= 0) {
-                scrollDirection = 1;
+        update() {
+            this.y -= this.speed;
+            this.life--;
+
+            if (this.y < -10 || this.life < 0) {
+                this.reset();
             }
+        }
 
-            techGrid.scrollLeft = scrollPosition;
+        draw() {
+            ctx.fillStyle = `rgba(45, 212, 191, ${this.opacity})`;
+            ctx.fillRect(this.x, this.y, this.size, this.size);
         }
     }
 
-    // Start auto-scroll
-    autoScrollInterval = setInterval(autoScroll, 30); // Update every 30ms for smooth animation
+    function init() {
+        resize();
+        for (let i = 0; i < particleCount; i++) {
+            particles.push(new Particle());
+        }
+        animate();
+    }
+
+    function animate() {
+        ctx.clearRect(0, 0, width, height);
+        particles.forEach(p => {
+            p.update();
+            p.draw();
+        });
+        requestAnimationFrame(animate);
+    }
+
+    window.addEventListener('resize', resize);
+    init();
 }
 
 // ===================================
@@ -394,7 +398,7 @@ function initTypewriter() {
     const chars = "!<>-_\\/[]{}—=+*^?#________";
 
     let prefixIndex = 0;
-    const prefixSpeed = 40; // Fast for the intro
+    const prefixSpeed = 40;
 
     function typePrefix() {
         if (prefixIndex < prefixText.length) {
@@ -402,7 +406,6 @@ function initTypewriter() {
             prefixIndex++;
             setTimeout(typePrefix, prefixSpeed);
         } else {
-            // Start the sequential crack for the name
             decodeSequentially();
         }
     }
@@ -415,15 +418,13 @@ function initTypewriter() {
         for (let i = 0; i < nameText.length; i++) {
             const targetChar = nameText[i];
 
-            // For spaces, just add them immediately
             if (targetChar === " ") {
                 solvedName += " ";
                 nameElement.textContent = solvedName;
                 continue;
             }
 
-            // Shuffle effect for each character
-            for (let j = 0; j < 8; j++) { // 8 shuffles before settling
+            for (let j = 0; j < 8; j++) {
                 const randomChar = chars[Math.floor(Math.random() * chars.length)];
                 nameElement.textContent = solvedName + randomChar;
                 await new Promise(resolve => setTimeout(resolve, 30));
@@ -432,23 +433,77 @@ function initTypewriter() {
             solvedName += targetChar;
             nameElement.textContent = solvedName;
 
-            // Random slight variance between characters for "realism"
             await new Promise(resolve => setTimeout(resolve, 10 + Math.random() * 40));
         }
 
         nameElement.classList.remove('decoding');
 
-        // Final fade out for cursor
         setTimeout(() => {
             if (cursorElement) cursorElement.style.transition = 'opacity 1s';
             if (cursorElement) cursorElement.style.opacity = '0';
         }, 1500);
     }
 
-    // Delay before starting site intro
     setTimeout(typePrefix, 1000);
 }
 
+// ===================================
+// Auto-Scroll for Skills Carousel
+// ===================================
+const techGrid = document.querySelector('.tech-grid');
+
+if (techGrid) {
+    let scrollPosition = 0;
+    let scrollDirection = 1;
+    let isHovering = false;
+    let autoScrollInterval;
+
+    techGrid.addEventListener('mouseenter', () => {
+        isHovering = true;
+    });
+
+    techGrid.addEventListener('mouseleave', () => {
+        isHovering = false;
+    });
+
+    function autoScroll() {
+        if (!isHovering) {
+            scrollPosition += scrollDirection * 1;
+
+            if (scrollPosition >= techGrid.scrollWidth - techGrid.clientWidth) {
+                scrollDirection = -1;
+            } else if (scrollPosition <= 0) {
+                scrollDirection = 1;
+            }
+
+            techGrid.scrollLeft = scrollPosition;
+        }
+    }
+
+    autoScrollInterval = setInterval(autoScroll, 30);
+}
+
+// ===================================
+// Dom Content Loaded Initialization
+// ===================================
+document.addEventListener('DOMContentLoaded', () => {
+    // Observe all cards and sections
+    const animatedElements = document.querySelectorAll(
+        '.tech-card, .credential-card, .project-card, .credential-category'
+    );
+
+    animatedElements.forEach(el => {
+        el.style.opacity = '0';
+        el.style.transform = 'translateY(20px)';
+        el.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+        skillObserver.observe(el);
+    });
+
+    // Initialize Typewriter Effect
+    initTypewriter();
+
+    // Initialize Canvas Background
+    initCanvasParticles();
+});
 
 console.log('Portfolio loaded successfully! 🚀');
-
