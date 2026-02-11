@@ -85,7 +85,7 @@ body::before {
         radial-gradient(ellipse at 80% 70%, rgba(6, 95, 70, 0.06) 0%, transparent 50%),
         radial-gradient(ellipse at 50% 50%, rgba(4, 47, 46, 0.05) 0%, transparent 50%),
         linear-gradient(135deg, #050505 0%, #0a0a0a 100%);
-    animation: gradientMeshMove 60s ease-in-out infinite;
+    animation: gradientMeshMove 35s ease-in-out infinite;
     will-change: transform;
     transform: translate3d(0, 0, 0);
 }
@@ -103,7 +103,7 @@ body::after {
         linear-gradient(rgba(13, 148, 136, 0.02) 1px, transparent 1px),
         linear-gradient(90deg, rgba(13, 148, 136, 0.02) 1px, transparent 1px);
     background-size: 80px 80px;
-    animation: gridMove 80s linear infinite;
+    animation: gridMove 45s linear infinite;
     opacity: 0.3;
     will-change: transform;
     transform: translate3d(0, 0, 0);
@@ -127,7 +127,7 @@ body::after {
     filter: blur(40px);
     /* Significantly reduced blur for performance */
     opacity: 0.2;
-    animation: floatOrb 40s ease-in-out infinite;
+    animation: floatOrb 25s ease-in-out infinite;
     will-change: transform;
     transform: translate3d(0, 0, 0);
 }
@@ -138,7 +138,7 @@ body::after {
     background: radial-gradient(circle, rgba(13, 148, 136, 0.15) 0%, transparent 75%);
     top: 10%;
     left: 5%;
-    animation-duration: 40s;
+    animation-duration: 25s;
 }
 
 .bg-orb:nth-child(2) {
@@ -147,7 +147,7 @@ body::after {
     background: radial-gradient(circle, rgba(6, 95, 70, 0.1) 0%, transparent 75%);
     top: 60%;
     right: 15%;
-    animation-duration: 50s;
+    animation-duration: 30s;
     animation-delay: -10s;
 }
 
@@ -157,7 +157,7 @@ body::after {
     background: radial-gradient(circle, rgba(4, 47, 46, 0.08) 0%, transparent 75%);
     bottom: 15%;
     left: 50%;
-    animation-duration: 60s;
+    animation-duration: 35s;
     animation-delay: -20s;
 }
 
@@ -167,7 +167,7 @@ body::after {
     background: radial-gradient(circle, rgba(13, 148, 136, 0.06) 0%, transparent 75%);
     top: 40%;
     left: 25%;
-    animation-duration: 45s;
+    animation-duration: 28s;
     animation-delay: -5s;
 }
 
@@ -177,7 +177,7 @@ body::after {
     background: radial-gradient(circle, rgba(6, 95, 70, 0.08) 0%, transparent 75%);
     top: 70%;
     right: 30%;
-    animation-duration: 55s;
+    animation-duration: 32s;
     animation-delay: -15s;
 }
 
