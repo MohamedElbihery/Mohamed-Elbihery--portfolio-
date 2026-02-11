@@ -370,6 +370,20 @@ body::after {
     animation-delay: -10s;
 }
 
+.firefly:nth-child(5) {
+    top: 15%;
+    left: 85%;
+    animation: fireflyMove1 22s ease-in-out infinite;
+    animation-delay: -2s;
+}
+
+.firefly:nth-child(6) {
+    top: 85%;
+    left: 15%;
+    animation: fireflyMove3 28s ease-in-out infinite;
+    animation-delay: -8s;
+}
+
 @keyframes fireflyMove1 {
 
     0%,
