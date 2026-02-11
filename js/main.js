@@ -377,7 +377,7 @@ if (techGrid) {
 }
 
 // ===================================
-// Typewriter Effect
+// Enhanced Typewriter Effect (Cyber Decoding)
 // ===================================
 function initTypewriter() {
     const prefixElement = document.getElementById('type-prefix');
@@ -388,30 +388,54 @@ function initTypewriter() {
 
     const prefixText = "Hi, I'm ";
     const nameText = "Mohamed Elbihery";
-    
-    let prefixIndex = 0;
-    let nameIndex = 0;
-    const typingSpeed = 100; // ms per character
+    const chars = "!<>-_\\/[]{}—=+*^?#________";
 
-    function type() {
+    let prefixIndex = 0;
+    const typingSpeed = 60; // Faster prefix typing
+
+    function typePrefix() {
         if (prefixIndex < prefixText.length) {
             prefixElement.textContent += prefixText.charAt(prefixIndex);
             prefixIndex++;
-            setTimeout(type, typingSpeed);
-        } else if (nameIndex < nameText.length) {
-            nameElement.textContent += nameText.charAt(nameIndex);
-            nameIndex++;
-            setTimeout(type, typingSpeed);
+            setTimeout(typePrefix, typingSpeed);
         } else {
-            // Typing finished, keep cursor blinking or hide it after a delay
-            setTimeout(() => {
-                if (cursorElement) cursorElement.style.display = 'none';
-            }, 3000);
+            startScrambling();
         }
     }
 
+    function startScrambling() {
+        let iteration = 0;
+        const maxIterations = 15;
+
+        // Add decoding class for CSS effects
+        nameElement.classList.add('decoding');
+
+        const scrambleInterval = setInterval(() => {
+            nameElement.textContent = nameText
+                .split("")
+                .map((letter, index) => {
+                    if (index < iteration) {
+                        return nameText[index];
+                    }
+                    return chars[Math.floor(Math.random() * chars.length)];
+                })
+                .join("");
+
+            if (iteration >= nameText.length) {
+                clearInterval(scrambleInterval);
+                nameElement.classList.remove('decoding');
+                // Typing finished, hide cursor after delay
+                setTimeout(() => {
+                    if (cursorElement) cursorElement.style.opacity = '0';
+                }, 2000);
+            }
+
+            iteration += 1 / 3; // Controls how fast it decrypts
+        }, 30);
+    }
+
     // Small delay before starting
-    setTimeout(type, 500);
+    setTimeout(typePrefix, 800);
 }
 
 document.addEventListener('DOMContentLoaded', () => {

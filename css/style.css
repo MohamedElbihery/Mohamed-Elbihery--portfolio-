@@ -498,6 +498,27 @@ body::after {
     }
 }
 
+/* Cyber Decoding Effect */
+#type-name.decoding {
+    text-shadow: 0 0 10px rgba(45, 212, 191, 0.4), 0 0 20px rgba(45, 212, 191, 0.2);
+    animation: CyberFlicker 0.1s infinite;
+}
+
+@keyframes CyberFlicker {
+    0% {
+        opacity: 0.8;
+    }
+
+    50% {
+        opacity: 1;
+    }
+
+    100% {
+        opacity: 0.9;
+    }
+}
+
+
 
 .hero-description {
     font-size: 1.1rem;
