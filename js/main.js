@@ -456,7 +456,9 @@ if (mouseGlow) {
         currentX += distX * 0.15;
         currentY += distY * 0.15;
 
-        mouseGlow.style.transform = `translate(${currentX - 300}px, ${currentY - 300}px)`; // -300 to center 600px div
+        // Dynamically center based on actual width/height
+        const offset = mouseGlow.offsetWidth / 2;
+        mouseGlow.style.transform = `translate(${currentX - offset}px, ${currentY - offset}px)`;
 
         requestAnimationFrame(animateGlow);
     }
