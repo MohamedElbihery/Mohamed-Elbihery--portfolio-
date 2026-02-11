@@ -474,7 +474,30 @@ body::after {
     font-weight: 700;
     line-height: 1.2;
     margin-bottom: var(--spacing-md);
+    min-height: 4.2rem;
+    /* Reserve space to prevent layout shift */
 }
+
+/* Typewriter Cursor */
+.type-cursor {
+    color: var(--accent-green);
+    font-weight: 300;
+    margin-left: 5px;
+    animation: blink 1s step-end infinite;
+}
+
+@keyframes blink {
+
+    from,
+    to {
+        opacity: 1;
+    }
+
+    50% {
+        opacity: 0;
+    }
+}
+
 
 .hero-description {
     font-size: 1.1rem;

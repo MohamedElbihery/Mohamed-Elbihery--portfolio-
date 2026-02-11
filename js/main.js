@@ -376,5 +376,48 @@ if (techGrid) {
     autoScrollInterval = setInterval(autoScroll, 30); // Update every 30ms for smooth animation
 }
 
+// ===================================
+// Typewriter Effect
+// ===================================
+function initTypewriter() {
+    const prefixElement = document.getElementById('type-prefix');
+    const nameElement = document.getElementById('type-name');
+    const cursorElement = document.querySelector('.type-cursor');
+
+    if (!prefixElement || !nameElement) return;
+
+    const prefixText = "Hi, I'm ";
+    const nameText = "Mohamed Elbihery";
+    
+    let prefixIndex = 0;
+    let nameIndex = 0;
+    const typingSpeed = 100; // ms per character
+
+    function type() {
+        if (prefixIndex < prefixText.length) {
+            prefixElement.textContent += prefixText.charAt(prefixIndex);
+            prefixIndex++;
+            setTimeout(type, typingSpeed);
+        } else if (nameIndex < nameText.length) {
+            nameElement.textContent += nameText.charAt(nameIndex);
+            nameIndex++;
+            setTimeout(type, typingSpeed);
+        } else {
+            // Typing finished, keep cursor blinking or hide it after a delay
+            setTimeout(() => {
+                if (cursorElement) cursorElement.style.display = 'none';
+            }, 3000);
+        }
+    }
+
+    // Small delay before starting
+    setTimeout(type, 500);
+}
+
+document.addEventListener('DOMContentLoaded', () => {
+    // Other initializations...
+    initTypewriter();
+});
+
 console.log('Portfolio loaded successfully! 🚀');
 
