@@ -314,76 +314,6 @@ const skillObserver = new IntersectionObserver((entries) => {
 });
 
 // ===================================
-// High-Performance Canvas Particles
-// ===================================
-function initCanvasParticles() {
-    const canvas = document.getElementById('bg-canvas');
-    if (!canvas) return;
-
-    const ctx = canvas.getContext('2d');
-    let width, height;
-    let particles = [];
-    const particleCount = 40;
-
-    function resize() {
-        width = window.innerWidth;
-        height = window.innerHeight;
-        canvas.width = width;
-        canvas.height = height;
-    }
-
-    class Particle {
-        constructor() {
-            this.reset();
-            this.y = Math.random() * height;
-        }
-
-        reset() {
-            this.x = Math.random() * width;
-            this.y = height + 10;
-            this.size = Math.random() * 2 + 1;
-            this.speed = Math.random() * 0.5 + 0.2;
-            this.opacity = Math.random() * 0.5 + 0.1;
-            this.life = Math.random() * 100 + 100;
-        }
-
-        update() {
-            this.y -= this.speed;
-            this.life--;
-
-            if (this.y < -10 || this.life < 0) {
-                this.reset();
-            }
-        }
-
-        draw() {
-            ctx.fillStyle = `rgba(45, 212, 191, ${this.opacity})`;
-            ctx.fillRect(this.x, this.y, this.size, this.size);
-        }
-    }
-
-    function init() {
-        resize();
-        for (let i = 0; i < particleCount; i++) {
-            particles.push(new Particle());
-        }
-        animate();
-    }
-
-    function animate() {
-        ctx.clearRect(0, 0, width, height);
-        particles.forEach(p => {
-            p.update();
-            p.draw();
-        });
-        requestAnimationFrame(animate);
-    }
-
-    window.addEventListener('resize', resize);
-    init();
-}
-
-// ===================================
 // Premium Name Decoding Effect (Sequential Cracking)
 // ===================================
 function initTypewriter() {
@@ -501,9 +431,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Initialize Typewriter Effect
     initTypewriter();
-
-    // Initialize Canvas Background
-    initCanvasParticles();
 });
 
 console.log('Portfolio loaded successfully! 🚀');
