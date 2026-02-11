@@ -380,7 +380,7 @@ if (techGrid) {
 }
 
 // ===================================
-// Enhanced Typewriter Effect (Cyber Decoding)
+// Premium Name Decoding Effect (Sequential Cracking)
 // ===================================
 function initTypewriter() {
     const prefixElement = document.getElementById('type-prefix');
@@ -394,51 +394,59 @@ function initTypewriter() {
     const chars = "!<>-_\\/[]{}—=+*^?#________";
 
     let prefixIndex = 0;
-    const typingSpeed = 60; // Faster prefix typing
+    const prefixSpeed = 40; // Fast for the intro
 
     function typePrefix() {
         if (prefixIndex < prefixText.length) {
             prefixElement.textContent += prefixText.charAt(prefixIndex);
             prefixIndex++;
-            setTimeout(typePrefix, typingSpeed);
+            setTimeout(typePrefix, prefixSpeed);
         } else {
-            startScrambling();
+            // Start the sequential crack for the name
+            decodeSequentially();
         }
     }
 
-    function startScrambling() {
-        let iteration = 0;
-        const maxIterations = 15;
-
-        // Add decoding class for CSS effects
+    async function decodeSequentially() {
         nameElement.classList.add('decoding');
 
-        const scrambleInterval = setInterval(() => {
-            nameElement.textContent = nameText
-                .split("")
-                .map((letter, index) => {
-                    if (index < iteration) {
-                        return nameText[index];
-                    }
-                    return chars[Math.floor(Math.random() * chars.length)];
-                })
-                .join("");
+        let solvedName = "";
 
-            if (iteration >= nameText.length) {
-                clearInterval(scrambleInterval);
-                nameElement.classList.remove('decoding');
-                // Typing finished, hide cursor after delay
-                setTimeout(() => {
-                    if (cursorElement) cursorElement.style.opacity = '0';
-                }, 2000);
+        for (let i = 0; i < nameText.length; i++) {
+            const targetChar = nameText[i];
+
+            // For spaces, just add them immediately
+            if (targetChar === " ") {
+                solvedName += " ";
+                nameElement.textContent = solvedName;
+                continue;
             }
 
-            iteration += 1 / 3; // Controls how fast it decrypts
-        }, 30);
+            // Shuffle effect for each character
+            for (let j = 0; j < 8; j++) { // 8 shuffles before settling
+                const randomChar = chars[Math.floor(Math.random() * chars.length)];
+                nameElement.textContent = solvedName + randomChar;
+                await new Promise(resolve => setTimeout(resolve, 30));
+            }
+
+            solvedName += targetChar;
+            nameElement.textContent = solvedName;
+
+            // Random slight variance between characters for "realism"
+            await new Promise(resolve => setTimeout(resolve, 10 + Math.random() * 40));
+        }
+
+        nameElement.classList.remove('decoding');
+
+        // Final fade out for cursor
+        setTimeout(() => {
+            if (cursorElement) cursorElement.style.transition = 'opacity 1s';
+            if (cursorElement) cursorElement.style.opacity = '0';
+        }, 1500);
     }
 
-    // Small delay before starting
-    setTimeout(typePrefix, 800);
+    // Delay before starting site intro
+    setTimeout(typePrefix, 1000);
 }
 
 
