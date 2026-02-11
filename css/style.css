@@ -1944,26 +1944,28 @@ body::after {
     }
 }
 
-/* Mobile Specific Optimizations (Up to 768px) */
-@media (max-width: 768px) {
+/* Mobile & Tablet Optimizations (Up to 1024px) */
+@media (max-width: 1024px) {
     .sidebar {
-        width: 90%;
-        max-width: 400px;
-        height: 65px;
+        width: 92%;
+        max-width: 450px;
+        height: 70px;
         top: auto;
-        bottom: 20px;
+        bottom: 25px;
         left: 50%;
         transform: translateX(-50%);
         flex-direction: row;
-        border: 1px solid rgba(255, 255, 255, 0.1);
-        border-radius: 40px;
+        border: 1px solid rgba(255, 255, 255, 0.15);
+        border-radius: 50px;
         /* Pill Shape */
-        padding: 0 10px;
+        padding: 0 15px;
         justify-content: center;
-        background-color: rgba(10, 10, 10, 0.85);
-        backdrop-filter: blur(15px);
-        -webkit-backdrop-filter: blur(15px);
-        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+        background-color: rgba(10, 10, 10, 0.9);
+        backdrop-filter: blur(20px);
+        -webkit-backdrop-filter: blur(20px);
+        box-shadow: 0 15px 40px rgba(0, 0, 0, 0.6), 0 0 20px rgba(45, 212, 191, 0.1);
+        z-index: 9999;
+        /* Top priority */
     }
 
     .nav-logo {
@@ -1974,37 +1976,46 @@ body::after {
         flex-direction: row;
         width: 100%;
         justify-content: space-around;
-        gap: 10px;
+        gap: 15px;
         padding: 0;
     }
 
     .nav-link {
-        width: 50px;
-        height: 50px;
+        width: 55px;
+        height: 55px;
         border-radius: 50%;
-        /* Circle for active state */
         display: flex;
         align-items: center;
         justify-content: center;
-        color: var(--text-secondary);
-        transition: all 0.3s ease;
+        color: rgba(255, 255, 255, 0.6);
+        transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        position: relative;
+    }
+
+    .nav-link svg {
+        width: 24px;
+        height: 24px;
+        transition: transform 0.3s ease;
     }
 
     .nav-link.active {
-        background: rgba(45, 212, 191, 0.15);
-        /* Techy glow circle */
+        background: rgba(45, 212, 191, 0.2);
         color: var(--accent-green);
+        box-shadow: 0 0 15px rgba(45, 212, 191, 0.2);
+    }
+
+    .nav-link.active svg {
+        transform: scale(1.1);
     }
 
     .nav-link.active::before {
         display: none;
-        /* Removed old underline style */
     }
 
     .main-content {
         margin-left: 0;
-        margin-bottom: 75px;
-        /* Account for taller bottom nav */
+        margin-bottom: 100px;
+        /* Space for floating nav */
     }
 
     .hero-section {
