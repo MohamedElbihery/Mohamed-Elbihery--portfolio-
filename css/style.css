@@ -2093,8 +2093,8 @@ body::after {
     }
 
     .tech-icon {
-        width: 45px;
-        height: 45px;
+        width: 38px !important;
+        height: 38px !important;
     }
 
     .section-title {
@@ -2140,8 +2140,8 @@ body::after {
     }
 
     .tech-icon {
-        width: 35px;
-        height: 35px;
+        width: 30px !important;
+        height: 30px !important;
     }
 }
 
