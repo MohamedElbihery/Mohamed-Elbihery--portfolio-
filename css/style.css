@@ -2092,6 +2092,11 @@ body::after {
         height: 70px;
     }
 
+    .tech-icon {
+        width: 45px;
+        height: 45px;
+    }
+
     .section-title {
         margin-bottom: var(--spacing-sm);
     }
@@ -2127,6 +2132,16 @@ body::after {
 
     .tech-card {
         min-width: 130px;
+    }
+
+    .tech-icon-wrapper {
+        width: 60px;
+        height: 60px;
+    }
+
+    .tech-icon {
+        width: 35px;
+        height: 35px;
     }
 }
 
