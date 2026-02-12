@@ -1183,6 +1183,11 @@ body::after {
     animation: pulseIcon 1.5s ease-in-out infinite;
 }
 
+.tech-card[data-skill="ccna"] .tech-icon {
+    filter: invert(1) brightness(2);
+    /* Ensures black SVG is visible on dark bg */
+}
+
 .tech-name {
     font-size: 1.1rem;
     font-weight: 600;
