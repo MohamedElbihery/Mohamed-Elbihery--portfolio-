@@ -195,39 +195,7 @@ if (footerText) {
     footerText.textContent = footerText.textContent.replace('2026', currentYear);
 }
 
-// ===================================
-// Enhanced Tech Card 3D Tilt & Magnetic Effect
-// ===================================
-const techCards = document.querySelectorAll('.tech-card');
-
-techCards.forEach(card => {
-    // 3D Tilt on mouse move
-    card.addEventListener('mousemove', (e) => {
-        const rect = card.getBoundingClientRect();
-        const x = e.clientX - rect.left;
-        const y = e.clientY - rect.top;
-
-        const centerX = rect.width / 2;
-        const centerY = rect.height / 2;
-
-        const rotateX = (y - centerY) / 8;
-        const rotateY = (centerX - x) / 8;
-
-        card.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) translateY(-12px) scale(1.05)`;
-    });
-
-    card.addEventListener('mouseleave', () => {
-        card.style.transform = '';
-    });
-
-    // Magnetic cursor effect
-    card.addEventListener('mouseenter', (e) => {
-        const icon = card.querySelector('.tech-icon');
-        if (icon) {
-            icon.style.transition = 'transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1)';
-        }
-    });
-});
+// Old 3D Tilt and Magnetic effect removed as they are now handled by initTechCardInteractions()
 
 // ===================================
 // Particle Effect on Hover
@@ -275,26 +243,7 @@ function createParticle(x, y, color) {
     animate();
 }
 
-techCards.forEach(card => {
-    let particleInterval;
-
-    card.addEventListener('mouseenter', (e) => {
-        const colors = ['#2dd4bf', '#34d399', '#14b8a6'];
-
-        particleInterval = setInterval(() => {
-            const rect = card.getBoundingClientRect();
-            const x = rect.left + Math.random() * rect.width;
-            const y = rect.top + Math.random() * rect.height;
-            const color = colors[Math.floor(Math.random() * colors.length)];
-
-            createParticle(x, y, color);
-        }, 100);
-    });
-
-    card.addEventListener('mouseleave', () => {
-        clearInterval(particleInterval);
-    });
-});
+// Particle logic moved to attachParticleEffect() and initTechCardInteractions()
 
 // ===================================
 // Skill Progress Animation on Scroll
@@ -378,46 +327,133 @@ function initTypewriter() {
 }
 
 // ===================================
-// Auto-Scroll for Skills Carousel
+// Seamless Infinite Marquee for Tech Stack
 // ===================================
-const techGrid = document.querySelector('.tech-grid');
+function initInfiniteMarquee() {
+    const techGrid = document.querySelector('.tech-grid');
+    const techGridInner = document.querySelector('.tech-grid-inner');
 
-if (techGrid) {
-    let scrollPosition = 0;
-    let scrollDirection = 1;
-    let isHovering = false;
-    let autoScrollInterval;
+    if (!techGrid || !techGridInner) return;
 
-    techGrid.addEventListener('mouseenter', () => {
-        isHovering = true;
+    // Clone items for seamless loop
+    const cards = Array.from(techGridInner.children);
+    cards.forEach(card => {
+        const clone = card.cloneNode(true);
+        techGridInner.appendChild(clone);
     });
 
-    techGrid.addEventListener('mouseleave', () => {
-        isHovering = false;
-    });
+    let x = 0;
+    let speed = 0.8; // Pixels per frame
+    let isPaused = false;
 
-    function autoScroll() {
-        if (!isHovering) {
-            scrollPosition += scrollDirection * 1;
+    // Pause on hover
+    techGrid.addEventListener('mouseenter', () => isPaused = true);
+    techGrid.addEventListener('mouseleave', () => isPaused = false);
 
-            if (scrollPosition >= techGrid.scrollWidth - techGrid.clientWidth) {
-                scrollDirection = -1;
-            } else if (scrollPosition <= 0) {
-                scrollDirection = 1;
+    function animate() {
+        if (!isPaused) {
+            x -= speed;
+
+            // If the first set of items has scrolled completely past
+            const halfWidth = techGridInner.scrollWidth / 2;
+            if (Math.abs(x) >= halfWidth) {
+                x = 0;
             }
 
-            techGrid.scrollLeft = scrollPosition;
+            techGridInner.style.transform = `translateX(${x}px)`;
         }
+        requestAnimationFrame(animate);
     }
 
-    autoScrollInterval = setInterval(autoScroll, 30);
+    animate();
+}
+
+// ===================================
+// Enhanced Tech Card 3D Tilt & Magnetic Effect
+// ===================================
+function initTechCardInteractions() {
+    // Select all cards including clones
+    const techCards = document.querySelectorAll('.tech-card');
+
+    techCards.forEach(card => {
+        // 3D Tilt on mouse move
+        card.addEventListener('mousemove', (e) => {
+            const rect = card.getBoundingClientRect();
+            const x = e.clientX - rect.left;
+            const y = e.clientY - rect.top;
+
+            const centerX = rect.width / 2;
+            const centerY = rect.height / 2;
+
+            // Refined sensitivity
+            const rotateX = (y - centerY) / 10;
+            const rotateY = (centerX - x) / 10;
+
+            card.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) scale(1.05)`;
+
+            // Dynamic glow follow
+            const glow = card.querySelector('.tech-icon-wrapper');
+            if (glow) {
+                const glowX = (x / rect.width) * 100;
+                const glowY = (y / rect.height) * 100;
+                glow.style.background = `radial-gradient(circle at ${glowX}% ${glowY}%, rgba(45, 212, 191, 0.25) 0%, transparent 70%)`;
+            }
+        });
+
+        card.addEventListener('mouseleave', () => {
+            card.style.transform = '';
+            const glow = card.querySelector('.tech-icon-wrapper');
+            if (glow) {
+                glow.style.background = '';
+            }
+        });
+
+        // Magnetic cursor effect for icon
+        card.addEventListener('mouseenter', (e) => {
+            const icon = card.querySelector('.tech-icon');
+            if (icon) {
+                icon.style.transition = 'transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1)';
+            }
+
+            // Initialize particles for clones too
+            attachParticleEffect(card);
+        });
+    });
+}
+
+function attachParticleEffect(card) {
+    if (card.dataset.particlesAttached) return;
+    card.dataset.particlesAttached = "true";
+
+    let particleInterval;
+    const colors = ['#2dd4bf', '#34d399', '#14b8a6'];
+
+    card.addEventListener('mouseenter', () => {
+        particleInterval = setInterval(() => {
+            const rect = card.getBoundingClientRect();
+            const x = rect.left + Math.random() * rect.width;
+            const y = rect.top + Math.random() * rect.height;
+            const color = colors[Math.floor(Math.random() * colors.length)];
+            createParticle(x, y, color);
+        }, 150); // Slightly slower for performance
+    });
+
+    card.addEventListener('mouseleave', () => {
+        clearInterval(particleInterval);
+    });
 }
 
 // ===================================
 // Dom Content Loaded Initialization
 // ===================================
 document.addEventListener('DOMContentLoaded', () => {
-    // Observe all cards and sections
+    // Initialize Marquee FIRST to clone cards
+    initInfiniteMarquee();
+
+    // Initialize interactions AFTER cloning so clones get events too
+    initTechCardInteractions();
+
+    // Observe all cards and sections for entry animation
     const animatedElements = document.querySelectorAll(
         '.tech-card, .credential-card, .project-card, .credential-category'
     );

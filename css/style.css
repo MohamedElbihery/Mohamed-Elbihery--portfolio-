@@ -991,35 +991,26 @@ body::after {
 .tech-grid {
     display: flex;
     gap: var(--spacing-md);
-    overflow-x: auto;
-    overflow-y: hidden;
-    scroll-behavior: smooth;
+    overflow: hidden;
+    /* Changed from auto to hidden for JS control */
     padding: var(--spacing-md) 0;
     position: relative;
     z-index: 1;
-    /* Hide scrollbar but keep functionality */
-    scrollbar-width: thin;
-    scrollbar-color: var(--accent-green) transparent;
+
+    /* Premium edge masking */
+    mask-image: linear-gradient(to right,
+            transparent,
+            black 5%,
+            black 95%,
+            transparent);
+    -webkit-mask-image: linear-gradient(to right,
+            transparent,
+            black 5%,
+            black 95%,
+            transparent);
 }
 
-.tech-grid::-webkit-scrollbar {
-    height: 8px;
-}
-
-.tech-grid::-webkit-scrollbar-track {
-    background: rgba(255, 255, 255, 0.05);
-    border-radius: 10px;
-}
-
-.tech-grid::-webkit-scrollbar-thumb {
-    background: var(--accent-green);
-    border-radius: 10px;
-    transition: background var(--transition-normal);
-}
-
-.tech-grid::-webkit-scrollbar-thumb:hover {
-    background: var(--accent-emerald);
-}
+/* Removed scrollbar styles as it's now an infinite marquee */
 
 .tech-card {
     background: linear-gradient(145deg, var(--bg-card) 0%, rgba(30, 30, 30, 0.8) 100%);
@@ -1458,6 +1449,13 @@ body::after {
     75% {
         transform: scale(1.2) translateX(-2px) rotate(-1deg);
     }
+}
+
+/* Ensure marquee items align properly */
+.tech-grid-inner {
+    display: flex;
+    gap: var(--spacing-md);
+    width: max-content;
 }
 
 /* ===================================
