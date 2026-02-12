@@ -2036,15 +2036,32 @@ body::after {
     }
 
     .hero-title {
-        font-size: 2.22rem;
-        line-height: 1.25;
+        font-size: 1.2rem;
+        /* Size for prefix on mobile */
+        line-height: 1.2;
         margin-bottom: var(--spacing-sm);
         min-height: 6rem;
-        /* Critical: Reserve height for 2 lines to stop layout shift */
         display: flex;
+        flex-direction: column;
+        /* "Hi" above Name */
         align-items: center;
         justify-content: center;
         text-align: center;
+        gap: 0.2rem;
+    }
+
+    #type-name {
+        font-size: 2.2rem;
+        /* Larger for name */
+        white-space: nowrap;
+        /* Force single line */
+        font-size: clamp(1.6rem, 8vw, 2.4rem);
+        /* Responsive size to fit screen */
+    }
+
+    .type-cursor {
+        margin-left: 2px;
+        height: 1.8rem;
     }
 
     .hero-description {
