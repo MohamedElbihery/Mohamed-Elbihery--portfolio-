@@ -1130,6 +1130,8 @@ body::after {
 .tech-icon {
     width: 70px;
     height: 70px;
+    max-width: 100%;
+    max-height: 100%;
     object-fit: contain;
     filter: drop-shadow(0 4px 12px rgba(0, 0, 0, 0.4));
     transition: all var(--transition-normal);
@@ -2092,9 +2094,11 @@ body::after {
         height: 70px;
     }
 
-    .tech-icon {
+    .tech-icon-wrapper .tech-icon {
         width: 38px !important;
         height: 38px !important;
+        max-width: 38px !important;
+        max-height: 38px !important;
     }
 
     .section-title {
@@ -2139,9 +2143,11 @@ body::after {
         height: 60px;
     }
 
-    .tech-icon {
+    .tech-icon-wrapper .tech-icon {
         width: 30px !important;
         height: 30px !important;
+        max-width: 30px !important;
+        max-height: 30px !important;
     }
 }
 
