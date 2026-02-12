@@ -1175,6 +1175,14 @@ body::after {
     animation: typewriterShake 0.6s ease-in-out infinite;
 }
 
+.tech-card[data-skill="cpp"]:hover .tech-icon {
+    animation: spinIcon 3s linear infinite;
+}
+
+.tech-card[data-skill="ccna"]:hover .tech-icon {
+    animation: pulseIcon 1.5s ease-in-out infinite;
+}
+
 .tech-name {
     font-size: 1.1rem;
     font-weight: 600;
