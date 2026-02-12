@@ -274,7 +274,7 @@ function initTypewriter() {
 
     const prefixText = "Hi, I'm ";
     const nameText = "Mohamed Elbihery";
-    const chars = "!<>-_\\/[]{}—=+*^?#________";
+    const chars = "!<>-_\\/[]{}—=+*^?#________"; // Keeping if needed for future, or removing if strictly unnecessary
 
     let prefixIndex = 0;
     const prefixSpeed = 40;
@@ -285,37 +285,18 @@ function initTypewriter() {
             prefixIndex++;
             setTimeout(typePrefix, prefixSpeed);
         } else {
-            decodeSequentially();
+            typeName();
         }
     }
 
-    async function decodeSequentially() {
-        nameElement.classList.add('decoding');
-
-        let solvedName = "";
+    async function typeName() {
+        let currentName = "";
 
         for (let i = 0; i < nameText.length; i++) {
-            const targetChar = nameText[i];
-
-            if (targetChar === " ") {
-                solvedName += " ";
-                nameElement.textContent = solvedName;
-                continue;
-            }
-
-            for (let j = 0; j < 8; j++) {
-                const randomChar = chars[Math.floor(Math.random() * chars.length)];
-                nameElement.textContent = solvedName + randomChar;
-                await new Promise(resolve => setTimeout(resolve, 30));
-            }
-
-            solvedName += targetChar;
-            nameElement.textContent = solvedName;
-
-            await new Promise(resolve => setTimeout(resolve, 10 + Math.random() * 40));
+            currentName += nameText[i];
+            nameElement.textContent = currentName;
+            await new Promise(resolve => setTimeout(resolve, 80)); // Simple typing speed
         }
-
-        nameElement.classList.remove('decoding');
 
         setTimeout(() => {
             if (cursorElement) cursorElement.style.transition = 'opacity 1s';
